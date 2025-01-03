@@ -3,9 +3,11 @@
 
 dnf list installed mysql
 
-if [ $? -ne 0 ]
+if [ $? -eq 0 ]
 then    
-    dnf remove mysql -y
+    sudo dnf remove mysql -y
+else 
+    exit 0
 fi
 
 

@@ -9,8 +9,7 @@ then
     echo "First One"
     dnf remove mysql  
 else 
-    echo " First two"
-    echo "First three"
+    exit 0
 fi
 
 echo "hiiiiiiiiiii"

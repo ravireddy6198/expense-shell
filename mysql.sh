@@ -23,6 +23,7 @@ then
     if [ $? -ne 0 ]
     then
         echo "server failure"
+        exit 1
     else
         echo "server success"
     fi

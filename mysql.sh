@@ -11,10 +11,10 @@ then
 else 
     echo " First two"
     echo "First three"
-    exit 0
-    echo "First four"
-    
+    exit 0 
 fi
+
+echo "hiiiiiiiiiii"
 
 # echo " Second"
 

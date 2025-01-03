@@ -7,6 +7,17 @@ LOG_FILE=$( echo $0 | cut -d "." -f1 )
 TIMESTAMP=$(date +%Y-%m-%d--%H:%M:%S)
 LOG_FILE_NAME="$LOG_FOLDER/$LOG_FILE.log------$TIMESTAMP"
 
+
+VALIDATE(){
+     if [ $1 -ne 0 ]
+    then
+        echo "$2 failure"
+        exit 1
+    else
+        echo "$2 success"
+    fi
+}
+
 dnf list installed mysql
 if [ $? -eq 0 ]
 then    
@@ -26,14 +37,8 @@ dnf list installed mysql &>>$LOG_FILE_NAME
 if [ $? -ne 0 ]
 then
     dnf install mysql -y &>>$LOG_FILE_NAME
-    if [ $? -ne 0 ]
-    then
-        echo "server failure"
-        exit 1
-    else
-        echo "server success"
-    fi
+    VALIDATE $? " MYSQL SERVER "
 else
-    echo "server already"
+    echo "MYSQL SERVER installed already"
 fi
 

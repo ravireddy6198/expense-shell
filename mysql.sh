@@ -1,18 +1,25 @@
 #!/bin/bash
 
-dnf install mysql -y
+USERID=$(id -u)
 
-if [ $? -ne 0 ]
+LOG_FOLDER=$(/var/log/mysql-logs)
+LOG_FILE=$( echo $0 | cut -d "." -f1 )
+TIMESTAMP=$(date +%Y-%m-%d--%H:%M:%S)
+LOG_FILE_NAME="LOG_FOLDER/LOG_FILE.log ------ $TIMESTAMP"
+
+
+
+if [ $USERID -ne 0 ]
 then
     echo "ERROR:: You must have sudo access to execute this script"
     exit 1
 fi
 
-dnf list installed mysql
+dnf list installed mysql &>>$LOG_FILE_NAME
 
 if [ $? -ne 0]
 then
-    dnf install mysql -y
+    dnf install mysql -y &>>$LOG_FILE_NAME
     if [ $? -ne 0 ]
     then
         echo "server failure"

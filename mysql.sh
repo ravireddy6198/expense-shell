@@ -3,7 +3,7 @@
 
 dnf list installed mysql
 
-if [ $? -nq 0 ]
+if [ $? -ne 0 ]
 then    
     dnf remove mysql -y
 fi

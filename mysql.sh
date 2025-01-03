@@ -10,8 +10,10 @@ then
     dnf remove mysql mysql-server   
 else 
     echo " First two"
-    exit 0
     echo "First three"
+    exit 0
+    echo "First four"
+    
 fi
 
 # echo " Second"

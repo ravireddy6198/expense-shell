@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+echo " First"
 dnf list installed mysql
 
 if [ $? -eq 0 ]
@@ -10,6 +10,7 @@ else
     exit 0
 fi
 
+echo " Second"
 
 USERID=$(id -u)
 
@@ -20,7 +21,7 @@ LOG_FILE_NAME="$LOG_FOLDER/$LOG_FILE.log------$TIMESTAMP"
 
 
 
-
+echo "Three"
 
 VALIDATE(){
      if [ $1 -ne 0 ]

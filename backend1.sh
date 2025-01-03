@@ -1,31 +1,31 @@
 #!/bin/bash
 
 USERID=$(id -u)
-R="\e[31m"
-G="\e[32m"
-Y="\e[33m"
-N="\e[0m"
 
-LOGS_FOLDER="/var/log/expense-logs"
-LOG_FILE=$(echo $0 | cut -d "." -f1 )
-TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
-LOG_FILE_NAME="$LOGS_FOLDER/$LOG_FILE-$TIMESTAMP.log"
+LOG_FOLDER="/var/log/mysql-logs"
+LOG_FILE=$( echo $0 | cut -d "." -f1 )
+TIMESTAMP=$(date +%Y-%m-%d--%H:%M:%S)
+LOG_FILE_NAME="$LOG_FOLDER/$LOG_FILE.log------$TIMESTAMP"
+
+
+
+# echo "Three"
 
 VALIDATE(){
-    if [ $1 -ne 0 ]
+     if [ $1 -ne 0 ]
     then
-        echo -e "$2 ... $R FAILURE $N"
+        echo "$2 failure"
         exit 1
     else
-        echo -e "$2 ... $G SUCCESS $N"
+        echo "$2 success"
     fi
 }
 
 CHECK_ROOT(){
     if [ $USERID -ne 0 ]
     then
-        echo "ERROR:: You must have sudo access to execute this script"
-        exit 1 #other than 0
+    echo "ERROR:: You must have sudo access to execute this script"
+    exit 1
     fi
 }
 
@@ -34,53 +34,46 @@ echo "Script started executing at: $TIMESTAMP" &>>$LOG_FILE_NAME
 CHECK_ROOT
 
 dnf module disable nodejs -y &>>$LOG_FILE_NAME
-VALIDATE $? "Disabling existing default NodeJS"
+VALIDATE $? "Disable the default nodeJs"
 
 dnf module enable nodejs:20 -y &>>$LOG_FILE_NAME
-VALIDATE $? "Enabling NodeJS 20"
+VALIDATE $? "Enable NodeJS 20"
 
 dnf install nodejs -y &>>$LOG_FILE_NAME
-VALIDATE $? "Installing NodeJS"
+VALIDATE $? " Install NodeJS"
 
-id expense &>>$LOG_FILE_NAME
-if [ $? -ne 0 ]
-then
-    useradd expense &>>$LOG_FILE_NAME
-    VALIDATE $? "Adding expense user"
-else
-    echo -e "expense user already exists ... $Y SKIPPING $N"
-fi
+useradd expense &>>$LOG_FILE_NAME
+VALIDATE $? "Creating expense User"
 
 mkdir -p /app &>>$LOG_FILE_NAME
-VALIDATE $? "Creating app directory"
+VALIDATE $? "Creating app Directory"
 
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE_NAME
-VALIDATE $? "Downloading backend"
+VALIDATE $? "Downloading Backend"
 
 cd /app
-rm -rf /app/*
 
 unzip /tmp/backend.zip &>>$LOG_FILE_NAME
-VALIDATE $? "unzip backend"
+VALIDATE $? "UNZIP Backend"
 
 npm install &>>$LOG_FILE_NAME
-VALIDATE $? "Installing dependencies"
+VALIDATE $? " Install the Dependencies"
 
-cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service
-
-# Prepare MySQL Schema
+cp home/ec2-user/expense-shell /etc/systemd/system/backend.service
+#prepare Mysql schema
 
 dnf install mysql -y &>>$LOG_FILE_NAME
-VALIDATE $? "Installing MySQL Client"
+VALIDATE $? " install Mysql client"
 
-mysql -h 172.31.21.105 -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE_NAME
-VALIDATE $? "Setting up the transactions schema and tables"
+mysql -h 172.31.21.105 -u root -pRavi123 < /app/schema/backend.sql &>>$LOG_FILE_NAME
+VALIDATE $? "setting up the transactions schems and tables"
 
-systemctl daemon-reload &>>$LOG_FILE_NAME
-VALIDATE $? "Daemon Reload"
+systemctl daemon-reload
+VALIDATE $? "daemon Reload"
 
-systemctl enable backend &>>$LOG_FILE_NAME
-VALIDATE $? "Enabling backend"
+systemctl start backend
+VALIDATE $? " Start Backend"
 
-systemctl restart backend &>>$LOG_FILE_NAME
-VALIDATE $? "Starting Backend"
+systemctl enable backend
+VALIDATE $? "Enable Backend"
+

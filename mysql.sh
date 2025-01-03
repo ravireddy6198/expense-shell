@@ -2,14 +2,7 @@
 
 
 
-dnf list installed mysql
 
-if [ $? -eq 0 ]
-then    
-    dnf remove mysql -y
-else
-    exit 0
-fi
 
 USERID=$(id -u)
 

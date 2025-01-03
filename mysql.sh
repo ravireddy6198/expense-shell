@@ -1,17 +1,17 @@
 #!/bin/bash
 
-echo " First"
-dnf list installed mysql
+# echo " First"
+# dnf list installed mysql 
 
 
-if [ $? -eq 0 ]
-then 
-    echo "First One"
-    dnf remove mysql  
-    echo " Mysql Server uninstalled and installed again"
-fi
+# if [ $? -eq 0 ]
+# then 
+#     echo "First One"
+#     dnf remove mysql -y 
+#     echo " Mysql Server uninstalled and installed again"
+# fi
 
-echo "hiiiiiiiiiii"
+# echo "hiiiiiiiiiii"
 
 
 
@@ -24,7 +24,7 @@ LOG_FILE_NAME="$LOG_FOLDER/$LOG_FILE.log------$TIMESTAMP"
 
 
 
-echo "Three"
+# echo "Three"
 
 VALIDATE(){
      if [ $1 -ne 0 ]
@@ -49,15 +49,15 @@ echo "Script started executing at: $TIMESTAMP" &>>$LOG_FILE_NAME
 CHECK_ROOT
 
 
-dnf list installed mysql &>>$LOG_FILE_NAME
+dnf install mysql-server -y &>>$LOG_FILE_NAME
+VALIDATE $? " Install MYSQL Server "
 
+systemctl enable mysqld
+VALIDATE $? "Enable the Mysql service" &>>$LOG_FILE_NAME
 
+systemctl start mysqld &>>$LOG_FILE_NAME
+VALIDATE $? "Mysql Server starts"
 
-if [ $? -ne 0 ]
-then
-    dnf install mysql -y &>>$LOG_FILE_NAME
-    VALIDATE $? " MYSQL SERVER "
-else
-    echo "MYSQL SERVER installed already"
-fi
+mysql_secure_installation --set-root-pass Ravi123
+VALIDATE $? " Set the root Password"
 

@@ -45,7 +45,7 @@ VALIDATE $? " Install NodeJS"
 useradd expense &>>$LOG_FILE_NAME
 VALIDATE $? "Creating expense User"
 
-mkdir /app &>>$LOG_FILE_NAME
+mkdir -p /app &>>$LOG_FILE_NAME
 VALIDATE $? "Creating app Directory"
 
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE_NAME

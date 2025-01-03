@@ -4,10 +4,10 @@ echo " First"
 dnf list installed mysql
 
 
-if [ $? -eq 0 ]
+if [ $? -eq 20 ]
 then 
     echo "First One"
-    dnf remove mysql  
+    dnf remove mysql mysql-server   
 else 
     echo " First two"
     exit 0

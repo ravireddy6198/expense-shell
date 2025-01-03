@@ -7,7 +7,7 @@ dnf list installed mysql
 if [ $? -eq 0 ]
 then 
     echo "First One"
-    dnf remove mysql mysql-server   
+    dnf remove mysql  
 else 
     echo " First two"
     echo "First three"

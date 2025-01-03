@@ -11,7 +11,6 @@ then
 else 
     echo " First two"
     echo "First three"
-    exit 0 
 fi
 
 echo "hiiiiiiiiiii"

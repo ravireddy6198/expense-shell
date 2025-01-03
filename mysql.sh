@@ -7,7 +7,7 @@ dnf list installed mysql
 if [ $? -ne 0 ]
 then 
     echo "First One"
-    sudo dnf remove mysql mysql-server   
+    dnf remove mysql mysql-server   
 else 
     echo " First two"
     exit 0

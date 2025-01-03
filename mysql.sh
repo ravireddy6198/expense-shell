@@ -4,9 +4,11 @@ echo " First"
 dnf list installed mysql
 
 if [ $? -eq 0 ]
-then    
+then 
+    echo "First One"
     sudo dnf remove mysql -y
 else 
+    echo " First two"
     exit 0
 fi
 

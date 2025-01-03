@@ -8,7 +8,7 @@ TIMESTAMP=$(date +%Y-%m-%d--%H:%M:%S)
 LOG_FILE_NAME="$LOG_FOLDER/$LOG_FILE.log------$TIMESTAMP"
 
 dnf list installed mysql
-if [ $? eq 0 ]
+if [ $? -eq 0 ]
 then    
     dnf remove mysql
 else

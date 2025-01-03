@@ -60,7 +60,7 @@ VALIDATE $? "Mysql Server starts"
 
 mysql_secure_installation --set-root-pass Ravi123
 
-mysql -h 172.31.21.105 -u root -pRavi123 -e 'show databases'
+mysql -h 172.31.21.105 -u root -pRavi123 -e 'show databases' &>>$LOG_FILE_NAME
 if [ $? -ne 0 ]
 then    
     echo " Mysql root password not setup"

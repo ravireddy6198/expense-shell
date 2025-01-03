@@ -12,7 +12,7 @@ dnf list installed mysql
 
 if [ $? -ne 0]
 then
-    dnf install mysql
+    dnf install mysql -y
     if [ $? -ne 0 ]
     then
         echo "server failure"
@@ -21,5 +21,5 @@ then
     fi
 else
     echo "server already"
-    
+fi
 

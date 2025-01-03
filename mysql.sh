@@ -8,6 +8,7 @@ if [ $? -eq 0 ]
 then 
     echo "First One"
     dnf remove mysql  
+    echo " Mysql Server uninstalled and installed again"
 fi
 
 echo "hiiiiiiiiiii"

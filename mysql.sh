@@ -59,5 +59,14 @@ systemctl start mysqld &>>$LOG_FILE_NAME
 VALIDATE $? "Mysql Server starts"
 
 mysql_secure_installation --set-root-pass Ravi123
-VALIDATE $? " Set the root Password"
+
+mysql -h 172.31.21.105 -u root -pRavi123 -e 'show databases'
+if [ $? -ne 0 ]
+then    
+    echo " Mysql root password not setup"
+    mysql_secure_installation --set-root-pass Ravi123
+    VALIDATE $? " Set the root Password"
+else
+    echo " Mysql root password already setup ...... skipping password setup"
+fi
 

@@ -7,7 +7,7 @@ LOG_FILE=$( echo $0 | cut -d "." -f1 )
 TIMESTAMP=$(date +%Y-%m-%d--%H:%M:%S)
 LOG_FILE_NAME="$LOG_FOLDER/$LOG_FILE.log------$TIMESTAMP"
 
-#################################################
+
 
 dnf list installed mysql
 if [ $? -eq 0 ]
@@ -16,7 +16,7 @@ then
 else
     exit 0
 fi
-##################################################
+
 
 
 VALIDATE(){

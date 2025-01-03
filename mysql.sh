@@ -5,7 +5,7 @@ USERID=$(id -u)
 LOG_FOLDER="/var/log/mysql-logs"
 LOG_FILE=$( echo $0 | cut -d "." -f1 )
 TIMESTAMP=$(date +%Y-%m-%d--%H:%M:%S)
-LOG_FILE_NAME="$LOG_FOLDER/$LOG_FILE.log ------ $TIMESTAMP"
+LOG_FILE_NAME="$LOG_FOLDER/$LOG_FILE.log------$TIMESTAMP"
 
 
 
